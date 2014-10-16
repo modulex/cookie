@@ -1,3 +1,8 @@
+/*
+Copyright 2014, modulex-cookie@1.0.1
+MIT Licensed
+build time: Thu, 16 Oct 2014 04:06:26 GMT
+*/
 modulex.add("cookie", [], function(require, exports, module) {
 
 /*
@@ -22,6 +27,7 @@ cookie = function (exports) {
    * @singleton
    */
   exports = {
+    version: '1.0.1',
     get: function (name) {
       var ret, m;
       if (isNotEmptyString(name)) {
