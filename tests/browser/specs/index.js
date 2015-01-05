@@ -44,6 +44,11 @@ describe('cookie', function () {
             Cookie.remove('_ks_test_14');
             Cookie.set('_ks_test_14', '4', 1, document.domain, '/', true);
             expect(Cookie.get('_ks_test_14')).to.be(undefined);
+
+            Cookie.remove('_ks_test_14');
+            Cookie.set('_ks_test_15', 'a:123&456', 1, null, null, false, true);
+            expect(!!((document.cookie.indexOf('a:123&456')>=0))).to.be(true);
+
         });
     });
 

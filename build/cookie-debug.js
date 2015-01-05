@@ -1,7 +1,7 @@
 /*
-Copyright 2014, modulex-cookie@1.0.1
+Copyright 2014, modulex-cookie@1.0.2
 MIT Licensed
-build time: Thu, 16 Oct 2014 04:06:26 GMT
+build time: Mon, 29 Dec 2014 08:21:35 GMT
 */
 modulex.add("cookie", [], function(require, exports, module) {
 
@@ -27,7 +27,7 @@ cookie = function (exports) {
    * @singleton
    */
   exports = {
-    version: '1.0.1',
+    version: '1.0.2',
     get: function (name) {
       var ret, m;
       if (isNotEmptyString(name)) {
@@ -37,8 +37,14 @@ cookie = function (exports) {
       }
       return ret;
     },
-    set: function (name, val, expires, domain, path, secure) {
-      var text = String(encode(val)), date = expires;
+    set: function (name, val, expires, domain, path, secure, raw) {
+      var text;
+      var date = expires;
+      if (!raw) {
+        text = String(encode(val));
+      } else {
+        text = String(val);
+      }
       if (typeof date === 'number') {
         date = new Date();
         date.setTime(date.getTime() + expires * MILLISECONDS_OF_DAY);
