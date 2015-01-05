@@ -1,9 +1,9 @@
 /*
-Copyright 2014, modulex-cookie@1.0.2
+Copyright 2015, modulex-cookie@1.0.2
 MIT Licensed
-build time: Mon, 29 Dec 2014 08:21:35 GMT
+build time: Mon, 05 Jan 2015 03:07:52 GMT
 */
-modulex.add("cookie", [], function(require, exports, module) {
+define("cookie", [], function(require, exports, module) {
 
 /*
 combined modules:

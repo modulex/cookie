@@ -16,67 +16,67 @@ var replace = require('gulp-replace');
 var wrapper = require('gulp-wrapper');
 var date = new Date();
 var header = ['/*',
-        'Copyright ' + date.getFullYear() + ', ' + packageInfo.name + '@' + packageInfo.version,
-        packageInfo.license + ' Licensed',
-        'build time: ' + (date.toGMTString()),
-    '*/', ''].join('\n');
+  'Copyright ' + date.getFullYear() + ', ' + packageInfo.name + '@' + packageInfo.version,
+  packageInfo.license + ' Licensed',
+  'build time: ' + (date.toGMTString()),
+  '*/', ''].join('\n');
 var appname = packageInfo.name;
 
 gulp.task('lint', function () {
-    return gulp.src('./lib/**/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter(stylish))
-        .pipe(jshint.reporter('fail'))
-        .pipe(jscs());
+  return gulp.src('./lib/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
+    .pipe(jshint.reporter('fail'))
+    .pipe(jscs());
 });
 
 gulp.task('clean', function () {
-    return gulp.src(build, {
-        read: false
-    }).pipe(clean());
+  return gulp.src(build, {
+    read: false
+  }).pipe(clean());
 });
 
 gulp.task('build', ['lint'], function () {
-    var tag = 'cookie';
-    var packages = {};
-    packages[tag] = {
-        base: path.resolve(src, tag)
-    };
-    return gulp.src('./lib/' + tag + '.js')
-        .pipe(modulex({
-            modulex: {
-                packages: packages
-            }
-        }))
-        .pipe(kclean({
-            files: [
-                {
-                    src: './lib/' + tag + '-debug.js',
-                    outputModule: tag
-                }
-            ]
-        }))
-        .pipe(replace(/@VERSION@/g, packageInfo.version))
-        .pipe(wrapper({
-                    header: header
-                }))
-        .pipe(gulp.dest(path.resolve(build)))
-        .pipe(filter(tag + '-debug.js'))
-        .pipe(replace(/@DEBUG@/g, ''))
-        .pipe(uglify())
-        .pipe(rename(tag + '.js'))
-        .pipe(gulp.dest(path.resolve(build)));
+  var tag = 'cookie';
+  var packages = {};
+  packages[tag] = {
+    base: path.resolve(src, tag)
+  };
+  return gulp.src('./lib/' + tag + '.js')
+    .pipe(modulex({
+      modulex: {
+        packages: packages
+      }
+    }))
+    .pipe(kclean({
+      files: [
+        {
+          src: './lib/' + tag + '-debug.js',
+          outputModule: tag
+        }
+      ]
+    }))
+    .pipe(replace(/@VERSION@/g, packageInfo.version))
+    .pipe(wrapper({
+      header: header
+    }))
+    .pipe(gulp.dest(path.resolve(build)))
+    .pipe(filter(tag + '-debug.js'))
+    .pipe(replace(/@DEBUG@/g, ''))
+    .pipe(uglify())
+    .pipe(rename(tag + '.js'))
+    .pipe(gulp.dest(path.resolve(build)));
 });
 
 gulp.task('tag', function (done) {
-    var cp = require('child_process');
-    var version = packageInfo.version;
-    cp.exec('git tag ' + version + ' | git push origin ' + version + ':' + version + ' | git push origin master:master', done);
+  var cp = require('child_process');
+  var version = packageInfo.version;
+  cp.exec('git tag ' + version + ' | git push origin ' + version + ':' + version + ' | git push origin master:master', done);
 });
 
 gulp.task('mx', function () {
-    var aggregateBower = require('aggregate-bower');
-    aggregateBower('bower_components/', 'mx_modules/');
+  var aggregateBower = require('aggregate-bower');
+  aggregateBower('bower_components/', 'mx_modules/');
 });
 
 gulp.task('default', ['build']);
