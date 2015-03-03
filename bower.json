@@ -2,6 +2,6 @@
     "name": "modulex-cookie",
     "author": "yiminghe <yiminghe@gmail.com>",
     "dependencies": {
-        "modulex": "*"
+        "modulex": "modulex/modulex#*"
     }
 }
