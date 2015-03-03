@@ -1,12 +1,6 @@
 {
     "name": "modulex-cookie",
     "author": "yiminghe <yiminghe@gmail.com>",
-        "**/*",
-        "!build/**/*",
-        "!lib/**/*",
-        "!meta/**/*",
-        "!index.js"
-    ],
     "dependencies": {
         "modulex": "*"
     }
